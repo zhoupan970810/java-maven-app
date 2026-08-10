@@ -60,6 +60,11 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+                        // Configure Git user
+                        sh 'git config --global user.email "jenkins@automation.local"'
+                        sh 'git config --global user.name "Jenkins CI/CD"'
+
+                        // Set remote URL with credentials
                         sh "git remote set-url origin https://${USER}:${PASS}@github.com/zhoupan970810/java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
