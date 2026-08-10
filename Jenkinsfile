@@ -72,21 +72,21 @@ pipeline {
 
                     // Ensure kubectl can connect to EKS
                     sh '''
-                        // Test EKS connection
+                        # Test EKS connection
                         echo "Testing EKS connection..."
                         kubectl cluster-info || echo "Cluster info check - continuing"
                         kubectl get nodes || echo "Node list check - continuing"
 
-                        // Apply Kubernetes manifests
+                        # Apply Kubernetes manifests
                         echo "Deploying to EKS..."
                         sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
                         sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
 
-                        // Wait for deployment to be ready
+                        # Wait for deployment to be ready
                         echo "Waiting for deployment to be ready..."
                         kubectl rollout status deployment/${APP_NAME} ==timeout=5m || echo "Rollout check - continuing..."
 
-                        // Show deployment status
+                        # Show deployment status
                         kubectl get pods
                         kubectl get services
                     '''
@@ -99,10 +99,10 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]){
                         sh '''
-                            // Set remote URL with credentials
+                            # Set remote URL with credentials
                             git remote set-url origin https://${USER}:${PASS}@github.com/zhoupan970810/java-maven-app.git
 
-                            // Check if there are changes to commit
+                            # Check if there are changes to commit
                             if git status --porcelain | grep -q .; then
                                 echo "Changes detected, committing..."
                                 git add .
@@ -146,7 +146,7 @@ pipeline {
 
                 // Clean up failed build
                 echo "Cleaning up failed build..."
-                sh "docker rmi {DOCKER_REPO}:${IMAGE_TAG} || true"
+                sh "docker rmi ${DOCKER_REPO}:${IMAGE_TAG} || true"
             }
         }
         always {
