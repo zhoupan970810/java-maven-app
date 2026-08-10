@@ -46,7 +46,7 @@ pipeline {
             environment {
                 AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
                 AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws_secret_access_key')
-                APP_NAME = java-maven-app
+                APP_NAME = 'java-maven-app'
             }
             steps {
                 script {
