@@ -99,6 +99,10 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]){
                         sh '''
+                            # Configure Git user (required for commit)
+                            git config --global user.email "jenkins@automation.local"
+                            git config --global user.name "Jenkins CI/CD"
+
                             # Set remote URL with credentials
                             git remote set-url origin https://${USER}:${PASS}@github.com/zhoupan970810/java-maven-app.git
 
