@@ -1,3 +1,4 @@
+# nonk8s - noinspection KubernetesDeprecatedKeys
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,10 +16,10 @@ spec:
         app: $APP_NAME
     spec:
       imagePullSecrets:
-        - name: aws-registry-key
+        - name: my-registry-key
       containers:
         - name: $APP_NAME
-          image: $DOCKER_REPO:$IMAGE_NAME
+          image: zhoupan970810/java-maven-app:$IMAGE_TAG
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
