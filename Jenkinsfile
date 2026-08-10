@@ -79,8 +79,8 @@ pipeline {
 
                         # Apply Kubernetes manifests
                         echo "Deploying to EKS..."
-                        sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
-                        sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
+                        envsubst < kubernetes/deployment.yaml | kubectl apply -f -
+                        envsubst < kubernetes/service.yaml | kubectl apply -f -
 
                         # Wait for deployment to be ready
                         echo "Waiting for deployment to be ready..."
